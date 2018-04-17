@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener, StepListener {
     private TextView textView;
     private StepDetector simpleStepDetector;
@@ -27,27 +29,25 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //TODO: 1. Get an instance of the SensorManager and assign it to the variable 'sensorManager'
+        sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        //Also get an instance of approriate sensor and assign it the variable 'sensor'
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        //TODO: 2. Create an instance of StepDetector &assign it to variable 'simpleStepDetector' and register a listener on it
+        simpleStepDetector = new StepDetector();
+        simpleStepDetector.registerListener(this);
+        //TODO: 3. Get the views from the activity_main.xml and assign to variables 'TvSteps','BtnStart','BtnStop' variables suitably
         TvSteps = findViewById(R.id.tv_steps);
         BtnStart = findViewById(R.id.btn_start);
         BtnStop = findViewById(R.id.btn_stop);
-
-        //TODO: 1. Get an instance of the SensorManager and assign it to the variable 'sensorManager'
-                    //Also get an instance of approriate sensor and assign it the variable 'sensor'
-        //TODO: 2. Create an instance of StepDetector &assign it to variable 'simpleStepDetector' and register a listener on it
-
-        //TODO: 3. Get the views from the activity_main.xml and assign to variables 'TvSteps','BtnStart','BtnStop' variables suitably
-
-
-
 
         BtnStart.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-
                 numSteps = 0;
+                TvSteps.setText(TEXT_NUM_STEPS + numSteps);
                 sensorManager.registerListener(MainActivity.this, sensor, SensorManager.SENSOR_DELAY_FASTEST);
-
             }
         });
 
@@ -56,9 +56,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             @Override
             public void onClick(View arg0) {
-
+                TvSteps.setText("");
                 sensorManager.unregisterListener(MainActivity.this);
-
             }
         });
 
@@ -68,9 +67,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 
 
+    /*
+        Provides reference to the Sensor object that changed and the new accuracy of the sensor
+    */
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
+
+    /*
+        Provides a sensorEvent object that contains information about the new sensor data, including
+        the accuracy of the data, the sensor that generated the data, the timestamp at which the data
+        was generated, and the new data that the sensor recorded.
+
+        The value reported in here is always 1
+     */
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -82,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void step(long timeNs) {
-//        TextView TvSteps = (TextView) findViewById(R.id.tv_steps);
         numSteps++;
         TvSteps.setText(TEXT_NUM_STEPS + numSteps);
     }
