@@ -33,9 +33,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         //Also get an instance of approriate sensor and assign it the variable 'sensor'
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
         //TODO: 2. Create an instance of StepDetector &assign it to variable 'simpleStepDetector' and register a listener on it
+        //The simpleStepDetector uses a method to calculate x,y,z vectors that more accurately detects a step than the native Sensor.TYPE_STEP_DETECTOR
         simpleStepDetector = new StepDetector();
+        //Register the main activity as a listener to the simpleStepDetector
         simpleStepDetector.registerListener(this);
+
         //TODO: 3. Get the views from the activity_main.xml and assign to variables 'TvSteps','BtnStart','BtnStop' variables suitably
         TvSteps = findViewById(R.id.tv_steps);
         BtnStart = findViewById(R.id.btn_start);
@@ -80,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         the accuracy of the data, the sensor that generated the data, the timestamp at which the data
         was generated, and the new data that the sensor recorded.
 
-        The value reported in here is always 1
+        The event associated with Sensor.TYPE_ACCELOREMETER provides x,y,z values when fired.
      */
 
     @Override
@@ -91,6 +95,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    /*
+        When simpleStepDetector detects a step, update the step counter and UI in the activity
+     */
     @Override
     public void step(long timeNs) {
         numSteps++;
