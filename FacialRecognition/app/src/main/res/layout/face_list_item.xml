@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal"
+    android:paddingEnd="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingStart="16dp">
+
+
+    <TextView
+            android:id="@+id/facial_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:background="#ABABAB"
+            android:textAllCaps="true"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            />
+
+        <TextView
+            android:id="@+id/facial_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:background="#444343"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            />
+
+</LinearLayout>
