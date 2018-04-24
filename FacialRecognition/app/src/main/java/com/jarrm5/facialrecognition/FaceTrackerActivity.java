@@ -71,10 +71,6 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         } else {
             requestCameraPermission();
         }
-
-
-
-
     }
     /*
         Since we are using an arrayList of Face objects, the list

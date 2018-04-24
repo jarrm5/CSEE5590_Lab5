@@ -42,7 +42,7 @@ public class FaceAdapter extends ArrayAdapter<Face> {
         TextView mFaceId = listItemView.findViewById(R.id.facial_id);
         TextView mFaceDetails = listItemView.findViewById(R.id.facial_details);
 
-        mFaceId.setText(currentFace.getId());
+        mFaceId.setText(Integer.toString(currentFace.getId()));
         mFaceDetails.setText(formatFacialDetails(
                 currentFace.getIsLeftEyeOpenProbability(),
                 currentFace.getIsRightEyeOpenProbability(),
@@ -59,30 +59,41 @@ public class FaceAdapter extends ArrayAdapter<Face> {
         from each Face object and output the results to each list item.
      */
     public String formatFacialDetails(float leftEyeProbability, float rightEyeProbability, float smileProbability){
+
+        float test1 = leftEyeProbability;
+        float test2 = rightEyeProbability;
+        float test3 = smileProbability;
+
         String result = ARE_EYES_OPEN_STRING;
         if(leftEyeProbability == Face.UNCOMPUTED_PROBABILITY || rightEyeProbability == Face.UNCOMPUTED_PROBABILITY){
             result += NO_DETECTION_STRING;
         }
-
-        if(leftEyeProbability > 50.0 || rightEyeProbability > 50.0){
-            result += YES_STRING;
-        }
         else{
-            result += NO_STRING;
+            if(leftEyeProbability > .500 || rightEyeProbability > .500){
+                result += YES_STRING;
+            }
+            else{
+                result += NO_STRING;
+            }
         }
+
+
 
         result += "\n" + IS_SMILING_STRING;
 
         if(smileProbability == Face.UNCOMPUTED_PROBABILITY){
             result += NO_DETECTION_STRING;
         }
-
-        if(smileProbability > 50.0){
-            result += YES_STRING;
-        }
         else{
-            result += NO_STRING;
+            if(smileProbability > .500){
+                result += YES_STRING;
+            }
+            else{
+                result += NO_STRING;
+            }
         }
+
+
         return result;
     }
 }
